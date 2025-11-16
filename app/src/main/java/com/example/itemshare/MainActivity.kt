@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ItemShareTheme {
-                ItemShareApp()
+                screenSwitch()
             }
         }
     }
@@ -69,7 +69,7 @@ fun ItemShareApp() {
                 AppDestinations.HOME -> Text("PlaceHolder")
                 AppDestinations.REQUESTS -> Requests(modifier = Modifier.padding(innerPadding))
                 AppDestinations.SETTINGS -> Settings(modifier = Modifier.padding(innerPadding))
-                AppDestinations.LOGIN -> loginScreen(modifier = Modifier.padding(innerPadding))
+//                AppDestinations.LOGIN -> loginScreen(modifier = Modifier.padding(innerPadding))
             }
         }
     }
@@ -83,5 +83,5 @@ enum class AppDestinations(
     REQUESTS("Requests", Icons.AutoMirrored.Default.Send),
     SETTINGS("Settings", Icons.Default.Settings),
 
-    LOGIN("Login", Icons.Default.AccountBox),
+//    LOGIN("Login", Icons.Default.AccountBox),
 }

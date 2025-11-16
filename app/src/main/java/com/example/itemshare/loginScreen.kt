@@ -11,8 +11,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun loginScreen(modifier: Modifier = Modifier.fillMaxSize())
+fun loginScreen(
+    onLoginSuccess: () -> Unit,
+    modifier: Modifier = Modifier.fillMaxSize())
 {
+    var user: String
+    var email: String
+    var pass: String
+    var loginSuccess: Boolean
+
     Column(modifier)
     {
         Spacer(
@@ -27,16 +34,21 @@ fun loginScreen(modifier: Modifier = Modifier.fillMaxSize())
         Spacer(
             Modifier.height(20.dp)
         )
-        UserBox()
-        emailBox()
-        passBox()
+        user = UserBox()
+        email = emailBox()
+        pass = passBox()
+
+        Spacer(
+            Modifier.height(20.dp)
+        )
+
+        Button(onClick = onLoginSuccess) { Text("Login") }
     }
-
-
 }
 
 @Composable
-fun UserBox(){
+fun UserBox(): String
+{
     var username by remember { mutableStateOf("") }
     OutlinedTextField(
         value = username,
@@ -48,9 +60,11 @@ fun UserBox(){
 
     )
     //send username info to backend/database
+    return username
 }
 @Composable
-fun emailBox() {
+fun emailBox(): String
+{
     var email by remember { mutableStateOf("") }
     OutlinedTextField(
         value = email,
@@ -79,9 +93,11 @@ fun emailBox() {
         //send email info to backend/database
 
     )
+    return email
 }
 @Composable
-fun passBox(){
+fun passBox(): String
+{
     var pass by remember {mutableStateOf("")}
     OutlinedTextField(
         value = pass,
@@ -92,5 +108,5 @@ fun passBox(){
             .padding(16.dp),
     )
     //send pass info to backend/database
-
+    return pass
 }
