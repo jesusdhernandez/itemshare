@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Settings
@@ -77,6 +78,5 @@ enum class AppDestinations(
 ) {
     HOME("Home", Icons.Default.Home),
     REQUESTS("Requests", Icons.AutoMirrored.Default.Send),
-
-    MESSAGES("Messages", Icons.Default.MailOutline);
+    MESSAGES("Messages", Icons.Default.Email);
 }

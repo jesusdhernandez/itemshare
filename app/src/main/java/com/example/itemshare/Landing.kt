@@ -12,7 +12,7 @@ fun screenSwitch()
     if (loggedIn) {
         ItemShareApp(userEmail)
     } else {
-        loginScreen(
+        LoginScreen(
             onLoginSuccess = {
                 loggedIn = true
                 userEmail = it
