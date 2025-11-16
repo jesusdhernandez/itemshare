@@ -41,7 +41,7 @@ fun Requests(userEmail: String, modifier: Modifier = Modifier)
             Button(onClick = {
                 database.collection("itemsAvail")
                     .add(mapOf(
-                    "item" to itemName,
+                    "listingName" to itemName,
                     "owner" to userEmail))
                     .addOnSuccessListener { documentReference ->
                         Log.d("Requests", "${userEmail} added ${itemName} to the collection")

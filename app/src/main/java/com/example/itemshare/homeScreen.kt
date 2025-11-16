@@ -3,7 +3,7 @@ package com.example.itemshare
 import android.util.Log
 import android.view.LayoutInflater
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,20 +31,27 @@ fun homeScreen(modifier: Modifier = Modifier) {
         )
     }
 
-    LaunchedEffect(Unit) {
-        itemCollection.get()
-            .addOnSuccessListener { result ->
-                val firestoreItems = result.documents.mapNotNull { document ->
-                    document.toObject<ListingItem>()
-                }
+    // Listen for real-time updates from Firestore
+    DisposableEffect(Unit) {
+        val listenerRegistration = itemCollection.addSnapshotListener { snapshot, exception ->
+            if (exception != null) {
+                Log.w("homeScreen", "Listen failed.", exception)
+                // On error, just show the static item
+                itemList = listOf(staticItem)
+                return@addSnapshotListener
+            }
+
+            if (snapshot != null) {
+                val firestoreItems = snapshot.documents.mapNotNull { it.toObject<ListingItem>() }
                 // Combine the static item with the items from Firestore
                 itemList = listOf(staticItem) + firestoreItems
             }
-            .addOnFailureListener { exception ->
-                Log.w("homeScreen", "Error getting documents.", exception)
-                // If Firestore fails, just show the static item
-                itemList = listOf(staticItem)
-            }
+        }
+
+        // When the composable is disposed, remove the listener
+        onDispose {
+            listenerRegistration.remove()
+        }
     }
 
     // AndroidView to host the RecyclerView
