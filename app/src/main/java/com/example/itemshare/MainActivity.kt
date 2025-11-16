@@ -66,7 +66,7 @@ fun ItemShareApp() {
     ) {
         Scaffold(modifier = Modifier.fillMaxSize().padding(16.dp)) { innerPadding ->
             when(currentDestination){
-                AppDestinations.HOME -> Text("PlaceHolder")
+                AppDestinations.HOME -> homeScreen(modifier = Modifier.padding(innerPadding))
                 AppDestinations.REQUESTS -> Requests(modifier = Modifier.padding(innerPadding))
                 AppDestinations.SETTINGS -> Settings(modifier = Modifier.padding(innerPadding))
                 AppDestinations.LOGIN -> loginScreen(modifier = Modifier.padding(innerPadding))
