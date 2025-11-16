@@ -36,4 +36,15 @@
         android:layout_alignLeft="@id/listingName"
         android:text="Blah Blah"
         android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/messageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Message Requester"
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft= "20dp"
+        android:layout_gravity="end" /> <!-- THIS LINE MOVES THE BUTTON TO THE RIGHT -->
+
+
 </RelativeLayout>
