@@ -64,10 +64,15 @@ fun ItemShareApp() {
         }
     ) {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            Greeting(
-                name = "Android",
-                modifier = Modifier.padding(innerPadding)
-            )
+            when(currentDestination){
+                AppDestinations.HOME -> HomeScreen() // 👈 show your HomeScreen
+                AppDestinations.REQUESTS -> Text("Requests Screen")
+                AppDestinations.SETTINGS -> Text("Settings Screen")
+            }
+//            Greeting(
+//                name = "Android",
+//                modifier = Modifier.padding(innerPadding)
+//            )
         }
     }
 }
