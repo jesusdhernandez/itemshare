@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itemshare.adapters.MyRecyclerViewAdapter
@@ -31,7 +32,7 @@ import com.google.firebase.firestore.toObject
 private const val CHANNEL_ID = "default_channel_id"
 
 @Composable
-fun homeScreen(modifier: Modifier = Modifier) {
+fun homeScreen(modifier: Modifier = Modifier, notifViewModel: NotifViewModel = viewModel()) {
     var itemList by remember { mutableStateOf<List<ListingItem>>(emptyList()) }
     val itemCollection = Firebase.firestore.collection("itemsAvail")
 
@@ -56,7 +57,7 @@ fun homeScreen(modifier: Modifier = Modifier) {
         }
     }
 
-    // Request notification permission
+    // nofi permission req here
     LaunchedEffect(Unit) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
@@ -65,7 +66,7 @@ fun homeScreen(modifier: Modifier = Modifier) {
         }
     }
 
-    // Create notification channel
+    // THIS IS THE  notification channel
     LaunchedEffect(Unit) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = context.getString(R.string.channel_name)
@@ -74,7 +75,6 @@ fun homeScreen(modifier: Modifier = Modifier) {
             val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
                 description = descriptionText
             }
-            // Register the channel with the system
             val notificationManager: NotificationManager =
                 context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
@@ -101,19 +101,18 @@ fun homeScreen(modifier: Modifier = Modifier) {
         }
     }
 
-    // AndroidView to host the RecyclerView
     AndroidView(
         modifier = modifier,
         factory = { context ->
             val view = LayoutInflater.from(context).inflate(R.layout.home_listing, null, false)
             val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
             recyclerView.layoutManager = LinearLayoutManager(context)
-            // Initialize adapter with an empty list
-            recyclerView.adapter = MyRecyclerViewAdapter(emptyList())
+            recyclerView.adapter = MyRecyclerViewAdapter(emptyList()) { listingItem ->
+                notifViewModel.onMessageButtonClicked(listingItem)
+            }
             view
         },
         update = { view ->
-            // Update the adapter with the new list when it changes
             val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
             (recyclerView.adapter as? MyRecyclerViewAdapter)?.updateData(itemList)
         }

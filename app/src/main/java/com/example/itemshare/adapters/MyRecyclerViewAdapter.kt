@@ -3,6 +3,7 @@ package com.example.itemshare.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,10 @@ import com.example.itemshare.R
 import com.example.itemshare.ListingItem
 import coil.load
 
-class MyRecyclerViewAdapter(private var listingList: List<ListingItem>):
+class MyRecyclerViewAdapter(
+    private var listingList: List<ListingItem>,
+    private val onItemClicked: (ListingItem) -> Unit
+):
         RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewHolder>()
         {
 
@@ -56,6 +60,10 @@ class MyRecyclerViewAdapter(private var listingList: List<ListingItem>):
                     holder.listingPic.setImageDrawable(null)
                     holder.listingPic.visibility = View.GONE
                 }
+
+                holder.messageButton.setOnClickListener {
+                    onItemClicked(listingItem)
+                }
             }
 
             override fun getItemCount(): Int {
@@ -68,5 +76,6 @@ class MyRecyclerViewAdapter(private var listingList: List<ListingItem>):
                         val listingName: TextView = itemView.findViewById(R.id.listingName)
                         val listingSummary: TextView = itemView.findViewById(R.id.listingSummary)
                         val listingPic: ImageView = itemView.findViewById(R.id.listingPic)
+                        val messageButton: Button = itemView.findViewById(R.id.messageButton)
                     }
         }
