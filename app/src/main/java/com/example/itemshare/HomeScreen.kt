@@ -11,12 +11,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun HomeScreen() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
+fun HomeScreen(modifier: Modifier = Modifier.fillMaxSize())
+{
+    Column(modifier)
+    {
         Spacer(
             Modifier.height(16.dp)
         )

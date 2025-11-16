@@ -65,14 +65,10 @@ fun ItemShareApp() {
     ) {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             when(currentDestination){
-                AppDestinations.HOME -> HomeScreen() // 👈 show your HomeScreen
-                AppDestinations.REQUESTS -> Text("Requests Screen")
-                AppDestinations.SETTINGS -> Text("Settings Screen")
+                AppDestinations.HOME -> HomeScreen(modifier = Modifier.padding(innerPadding))
+                AppDestinations.REQUESTS -> Requests(modifier = Modifier.padding(innerPadding))
+                AppDestinations.SETTINGS -> Settings(modifier = Modifier.padding(innerPadding))
             }
-//            Greeting(
-//                name = "Android",
-//                modifier = Modifier.padding(innerPadding)
-//            )
         }
     }
 }
@@ -85,11 +81,3 @@ enum class AppDestinations(
     REQUESTS("Requests", Icons.AutoMirrored.Default.Send),
     SETTINGS("Settings", Icons.Default.Settings),
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun GreetingPreview() {
-//    ItemShareTheme {
-//        Greeting("Android")
-//    }
-//}

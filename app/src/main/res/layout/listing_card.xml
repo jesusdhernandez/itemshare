@@ -25,8 +25,8 @@
         android:layout_below="@id/listingName"
         android:layout_marginStart="320dp"
         android:layout_marginTop="2dp"
-        app:srcCompact="@drawable/listingImage"
         />
+<!--        app:srcCompact="@drawable/listingImage"-->
 
     <TextView
         android:id="@+id/listingSummary"
