@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:gravity="center"
-        android:text="Add your shit here"
+        android:text="Inbox"
         android:textSize="18sp" />
 
     <androidx.recyclerview.widget.RecyclerView

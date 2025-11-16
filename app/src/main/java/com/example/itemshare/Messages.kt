@@ -31,16 +31,14 @@ import com.google.firebase.firestore.toObject
 @Composable
 fun Messages(modifier: Modifier = Modifier.fillMaxSize())
 {
-    Column(modifier) { Text("Messages will go here :)") }
-
     var messagesList by remember { mutableStateOf<List<messageInfo>>(emptyList()) }
     val messagesCollection = Firebase.firestore.collection("messages")
 
     val staticItem = remember {
         messageInfo(
             id = "static_id",
-            messagerName = "zach",
-            message = "fack",
+            messagerName = "zachary smellicious",
+            message = "fackkkkkk you",
         )
     }
 
