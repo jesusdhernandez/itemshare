@@ -8,12 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
-import androidx.compose.material.icons.filled.AccountBox
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -36,15 +32,15 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ItemShareTheme {
-                ItemShareApp()
+                screenSwitch()
             }
         }
     }
 }
 
-@PreviewScreenSizes
+@Preview
 @Composable
-fun ItemShareApp() {
+fun ItemShareApp(userEmail: String = "") {
     var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.HOME) }
 
     NavigationSuiteScaffold(
@@ -66,10 +62,9 @@ fun ItemShareApp() {
     ) {
         Scaffold(modifier = Modifier.fillMaxSize().padding(16.dp)) { innerPadding ->
             when(currentDestination){
+                AppDestinations.REQUESTS -> Requests(userEmail = userEmail, modifier = Modifier.padding(innerPadding))
                 AppDestinations.HOME -> homeScreen(modifier = Modifier.padding(innerPadding))
-                AppDestinations.REQUESTS -> Requests(modifier = Modifier.padding(innerPadding))
                 AppDestinations.SETTINGS -> Settings(modifier = Modifier.padding(innerPadding))
-                AppDestinations.LOGIN -> loginScreen(modifier = Modifier.padding(innerPadding))
             }
         }
     }
@@ -82,6 +77,4 @@ enum class AppDestinations(
     HOME("Home", Icons.Default.Home),
     REQUESTS("Requests", Icons.AutoMirrored.Default.Send),
     SETTINGS("Settings", Icons.Default.Settings),
-
-    LOGIN("Login", Icons.Default.AccountBox),
 }
