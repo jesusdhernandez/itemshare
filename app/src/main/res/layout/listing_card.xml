@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
     android:layout_width="match_parent"
-    android:layout_height="105dp">
+    android:layout_height="150dp">
 
     <TextView
         android:id="@+id/listingName"
@@ -30,8 +30,8 @@
 
     <TextView
         android:id="@+id/listingSummary"
-        android:layout_width="296dp"
-        android:layout_height="65dp"
+        android:layout_width="295dp"
+        android:layout_height="34dp"
         android:layout_below="@id/listingName"
         android:layout_alignLeft="@id/listingName"
         android:text="Blah Blah"
@@ -39,12 +39,14 @@
 
     <Button
         android:id="@+id/messageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Message Requester"
-        android:layout_marginTop="70dp"
-        android:layout_marginLeft= "20dp"
-        android:layout_gravity="end" /> <!-- THIS LINE MOVES THE BUTTON TO THE RIGHT -->
+        android:layout_width="297dp"
+        android:layout_height="48dp"
+        android:layout_below="@id/listingSummary"
+        android:layout_alignLeft="@id/listingName"
+        android:text="Message!"
+        android:textSize="9sp"
+        android:backgroundTint="#d6e1ad"
+        android:textColor="#FD5DA8" />
 
 
 </RelativeLayout>
