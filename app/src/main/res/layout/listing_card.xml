@@ -25,7 +25,7 @@
         android:layout_below="@id/listingName"
         android:layout_marginStart="320dp"
         android:layout_marginTop="2dp"
-        app:srcCompact="@drawable/listingImage"
+        android:src="@drawable/listingimage"
         />
 
     <TextView
@@ -33,7 +33,7 @@
         android:layout_width="296dp"
         android:layout_height="65dp"
         android:layout_below="@id/listingName"
-        android:layout_alignLeft="@id/listingName"
+        android:layout_alignStart="@id/listingName"
         android:text="Blah Blah"
         android:textSize="16sp" />
 </RelativeLayout>
