@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
+import androidx.compose.ui.unit.dp
 import com.example.itemshare.ui.theme.ItemShareTheme
 
 class MainActivity : ComponentActivity() {
@@ -63,11 +64,12 @@ fun ItemShareApp() {
             }
         }
     ) {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+        Scaffold(modifier = Modifier.fillMaxSize().padding(16.dp)) { innerPadding ->
             when(currentDestination){
-                AppDestinations.HOME -> HomeScreen(modifier = Modifier.padding(innerPadding))
+                AppDestinations.HOME -> Text("PlaceHolder")
                 AppDestinations.REQUESTS -> Requests(modifier = Modifier.padding(innerPadding))
                 AppDestinations.SETTINGS -> Settings(modifier = Modifier.padding(innerPadding))
+                AppDestinations.LOGIN -> loginScreen(modifier = Modifier.padding(innerPadding))
             }
         }
     }
@@ -80,4 +82,6 @@ enum class AppDestinations(
     HOME("Home", Icons.Default.Home),
     REQUESTS("Requests", Icons.AutoMirrored.Default.Send),
     SETTINGS("Settings", Icons.Default.Settings),
+
+    LOGIN("Login", Icons.Default.AccountBox),
 }

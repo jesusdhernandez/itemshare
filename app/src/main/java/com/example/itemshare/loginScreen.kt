@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier.fillMaxSize())
+fun loginScreen(modifier: Modifier = Modifier.fillMaxSize())
 {
     Column(modifier)
     {

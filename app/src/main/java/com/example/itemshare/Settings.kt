@@ -15,6 +15,6 @@ fun Settings(modifier: Modifier = Modifier.fillMaxSize())
 {
     Column(modifier)
     {
-    Text("ur mom settings")
+        Text("ur mom settings")
     }
 }
