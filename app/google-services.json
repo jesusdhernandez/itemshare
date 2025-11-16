@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "936279255242",
+    "project_id": "itemshare-hackathon",
+    "storage_bucket": "itemshare-hackathon.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:936279255242:android:4208ccc12718d0bfd5ec33",
+        "android_client_info": {
+          "package_name": "com.example.itemshare"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEME_4FqZqOu9a1rqPyBP6-7BBfYqFDF4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
