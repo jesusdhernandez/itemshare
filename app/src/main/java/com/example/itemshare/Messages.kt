@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.itemshare.adapters.MessageRecyclerViewAdapter
 import com.example.itemshare.adapters.MyRecyclerViewAdapter
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
@@ -36,7 +37,7 @@ fun Messages(modifier: Modifier = Modifier.fillMaxSize())
     val messagesCollection = Firebase.firestore.collection("messages")
 
     val staticItem = remember {
-        ListingItem(
+        messageInfo(
             id = "static_id",
             messagerName = "zach",
             message = "fack",
@@ -54,7 +55,7 @@ fun Messages(modifier: Modifier = Modifier.fillMaxSize())
             }
 
             if (snapshot != null) {
-                val firestoreItems = snapshot.documents.mapNotNull { it.toObject<ListingItem>() }
+                val firestoreItems = snapshot.documents.mapNotNull { it.toObject<messageInfo>() }
                 // Combine the static item with the items from Firestore
                 messagesList = listOf(staticItem) + firestoreItems
             }
@@ -70,17 +71,17 @@ fun Messages(modifier: Modifier = Modifier.fillMaxSize())
     AndroidView(
         modifier = modifier,
         factory = { context ->
-            val view = LayoutInflater.from(context).inflate(R.layout.home_listing, null, false)
+            val view = LayoutInflater.from(context).inflate(R.layout.message_listing, null, false)
             val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
             recyclerView.layoutManager = LinearLayoutManager(context)
             // Initialize adapter with an empty list
-            recyclerView.adapter = MyRecyclerViewAdapter(emptyList())
+            recyclerView.adapter = MessageRecyclerViewAdapter(emptyList())
             view
         },
         update = { view ->
             // Update the adapter with the new list when it changes
             val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
-            (recyclerView.adapter as? MyRecyclerViewAdapter)?.updateData(messagesList)
+            (recyclerView.adapter as? MessageRecyclerViewAdapter)?.updateData(messagesList)
         }
     )
 
