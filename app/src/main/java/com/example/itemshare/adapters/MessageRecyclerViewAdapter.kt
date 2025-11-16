@@ -22,7 +22,7 @@ class MessageRecyclerViewAdapter(private var listingList: List<messageInfo>):
                 viewType: Int
             ): MyViewHolder {
                 val view = LayoutInflater.from(parent.context).inflate(
-                    R.layout.listing_card,parent,false
+                    R.layout.message_card,parent,false
                 )
                 return MyViewHolder(view)
             }
