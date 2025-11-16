@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun loginScreen(
+fun LoginScreen(
     onLoginSuccess: (email: String) -> Unit,
     modifier: Modifier = Modifier
         .fillMaxSize()
@@ -34,7 +34,7 @@ fun loginScreen(
 
     Column(modifier) {
         Spacer(
-            Modifier.height(16.dp)
+            Modifier.height(40.dp)
         )
         Text(
             text = "ItemShare",
