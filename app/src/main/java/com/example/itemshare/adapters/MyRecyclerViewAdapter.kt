@@ -95,5 +95,6 @@ class MyRecyclerViewAdapter(
                         val listingSummary: TextView = itemView.findViewById(R.id.listingSummary)
                         val listingPic: ImageView = itemView.findViewById(R.id.listingPic)
                         val messageButton: Button = itemView.findViewById(R.id.messageButton)
+                        val borrowButton: Button = itemView.findViewById(R.id.borrowButton)
                     }
         }
