@@ -7,6 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -135,10 +136,10 @@ fun Requests(userEmail: String, modifier: Modifier = Modifier)
             ) { Text("Add Item") }
         }
 
-        Row(modifier) { HorizontalDivider() }
+        Row() { Spacer(modifier = Modifier.padding(8.dp, 8.dp)) }
 
-        Row(modifier) {
-            Text("Any items you lend will appear here.")
+        Row() {
+            ListBorrowed()
         }
     }
 }
