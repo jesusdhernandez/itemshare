@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -64,7 +65,7 @@ fun ItemShareApp(userEmail: String = "") {
             when(currentDestination){
                 AppDestinations.REQUESTS -> Requests(userEmail = userEmail, modifier = Modifier.padding(innerPadding))
                 AppDestinations.HOME -> homeScreen(modifier = Modifier.padding(innerPadding))
-                AppDestinations.SETTINGS -> Settings(modifier = Modifier.padding(innerPadding))
+                AppDestinations.MESSAGES -> Messages(modifier = Modifier.padding(innerPadding))
             }
         }
     }
@@ -76,5 +77,6 @@ enum class AppDestinations(
 ) {
     HOME("Home", Icons.Default.Home),
     REQUESTS("Requests", Icons.AutoMirrored.Default.Send),
-    SETTINGS("Settings", Icons.Default.Settings),
+
+    MESSAGES("Messages", Icons.Default.MailOutline);
 }
