@@ -75,49 +75,67 @@ fun Requests(userEmail: String, modifier: Modifier = Modifier)
             }
         }
         Row {
-            Button(onClick = {
-                imageUri?.let { uri ->
-                    val storageRef = storage.reference
-                    val imageRef = storageRef.child("images/${uri.lastPathSegment}")
-                    val uploadTask = imageRef.putFile(uri)
+            Button(
+                onClick = {
+                    val currentImageUri = imageUri
+                    if (currentImageUri == null) {
+                        // No image, just add the item data to Firestore
+                        val itemData = mapOf(
+                            "listingName" to itemName,
+                            "listingSummary" to itemSummary,
+                            "owner" to userEmail
+                        )
+                        database.collection("itemsAvail").add(itemData)
+                            .addOnSuccessListener {
+                                Log.d("Requests", "Item added successfully")
+                                // Clear fields
+                                itemName = ""
+                                itemSummary = ""
+                                imageUri = null
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w("Requests", "Error adding item", e)
+                            }
+                    } else {
+                        // Image is present, upload it first
+                        val storageRef = storage.reference
+                        val imageRef = storageRef.child("images/${currentImageUri.lastPathSegment}")
+                        val uploadTask = imageRef.putFile(currentImageUri)
 
-                    uploadTask.continueWithTask { task ->
-                        if (!task.isSuccessful) {
-                            task.exception?.let {
-                                throw it
+                        uploadTask.continueWithTask { task ->
+                            if (!task.isSuccessful) {
+                                task.exception?.let { throw it }
+                            }
+                            imageRef.downloadUrl
+                        }.addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                val downloadUri = task.result
+                                val itemData = mapOf(
+                                    "listingName" to itemName,
+                                    "listingSummary" to itemSummary,
+                                    "owner" to userEmail,
+                                    "listingPic" to downloadUri.toString()
+                                )
+                                database.collection("itemsAvail").add(itemData)
+                                    .addOnSuccessListener {
+                                        Log.d("Requests", "Item with image added successfully")
+                                        // Clear fields
+                                        itemName = ""
+                                        itemSummary = ""
+                                        imageUri = null
+                                    }
+                                    .addOnFailureListener { e ->
+                                        Log.w("Requests", "Error adding item with image", e)
+                                    }
+                            } else {
+                                Log.w("Requests", "Image upload failed.", task.exception)
                             }
                         }
-                        imageRef.downloadUrl
-                    }.addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            val downloadUri = task.result
-                            database.collection("itemsAvail")
-                                .add(
-                                    mapOf(
-                                        "listingName" to itemName,
-                                        "listingSummary" to itemSummary,
-                                        "owner" to userEmail,
-                                        "listingPic" to downloadUri.toString()
-                                    )
-                                )
-                                .addOnSuccessListener { documentReference ->
-                                    Log.d("Requests", "${userEmail} added ${itemName} to the collection")
-                                }
-                                .addOnFailureListener { e ->
-                                    Log.w("Requests", "Error adding item: ${itemName} (${userEmail})", e)
-                                }
-                            itemName = ""
-                            itemSummary = ""
-                            imageUri = null
-                        } else {
-                            // Handle failure
-                            Log.w("Requests", "Image upload failed.", task.exception)
-                        }
                     }
-                }
-
-            }, Modifier.padding(8.dp, 8.dp), enabled = itemName.isNotEmpty() && imageUri != null)
-            { Text("Add Item") }
+                },
+                modifier = Modifier.padding(8.dp, 8.dp),
+                enabled = itemName.isNotEmpty()
+            ) { Text("Add Item") }
         }
 
         Row(modifier) { HorizontalDivider() }
