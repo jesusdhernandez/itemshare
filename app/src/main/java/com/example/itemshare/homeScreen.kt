@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itemshare.adapters.MyRecyclerViewAdapter
@@ -32,7 +31,7 @@ import com.google.firebase.firestore.toObject
 private const val CHANNEL_ID = "default_channel_id"
 
 @Composable
-fun homeScreen(modifier: Modifier = Modifier, notifViewModel: NotifViewModel = viewModel()) {
+fun homeScreen(userEmail: String, modifier: Modifier = Modifier) {
     var itemList by remember { mutableStateOf<List<ListingItem>>(emptyList()) }
     val itemCollection = Firebase.firestore.collection("itemsAvail")
 
@@ -41,7 +40,8 @@ fun homeScreen(modifier: Modifier = Modifier, notifViewModel: NotifViewModel = v
             id = "static_id",
             listingName = "A Jason Todd",
             listingSummary = "Looking for a kid to be Robin",
-            listingPic = R.drawable.listingimage
+            listingPic = R.drawable.listingimage,
+            owner = "bwayne@wayneenterprises.com"
         )
     }
     val context = LocalContext.current
@@ -108,7 +108,19 @@ fun homeScreen(modifier: Modifier = Modifier, notifViewModel: NotifViewModel = v
             val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
             recyclerView.layoutManager = LinearLayoutManager(context)
             recyclerView.adapter = MyRecyclerViewAdapter(emptyList()) { listingItem ->
-                notifViewModel.onMessageButtonClicked(listingItem)
+                val db = Firebase.firestore
+                val notification = NotificationRequest(
+                    from = userEmail,
+                    to = listingItem.owner,
+                    itemName = listingItem.listingName
+                )
+                db.collection("notifications").add(notification)
+                    .addOnSuccessListener {
+                        Log.d("homeScreen", "Notification request sent to ${listingItem.owner}")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("homeScreen", "Error sending notification request", e)
+                    }
             }
             view
         },
