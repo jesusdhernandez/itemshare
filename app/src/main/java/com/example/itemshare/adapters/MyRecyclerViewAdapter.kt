@@ -37,8 +37,23 @@ class MyRecyclerViewAdapter(private var listingList: List<ListingItem>):
                 holder.listingName.text = listingItem.listingName
                 holder.listingSummary.text = listingItem.listingSummary
 
-                if(listingItem.listingPic != null)
-                    holder.listingPic.setImageResource(listingItem.listingPic!!)
+                if (listingItem.listingPic != null) {
+                    when (val pic = listingItem.listingPic) {
+                        is Int -> {
+                            holder.listingPic.setImageResource(pic)
+                        }
+                        is String -> {
+                            // TODO: Add an image loading library like Glide or Coil to load from URL
+                            // For now, using a placeholder
+                            holder.listingPic.setImageResource(android.R.drawable.ic_menu_gallery)
+                        }
+                    }
+                    holder.listingPic.visibility = View.VISIBLE
+                } else {
+                    // Clear the image and hide the view if there is no picture
+                    holder.listingPic.setImageDrawable(null)
+                    holder.listingPic.visibility = View.GONE
+                }
             }
 
             override fun getItemCount(): Int {

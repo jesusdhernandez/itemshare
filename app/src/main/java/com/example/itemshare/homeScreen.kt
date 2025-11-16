@@ -31,19 +31,16 @@ fun homeScreen(modifier: Modifier = Modifier) {
         )
     }
 
-    // Listen for real-time updates from Firestore
     DisposableEffect(Unit) {
         val listenerRegistration = itemCollection.addSnapshotListener { snapshot, exception ->
             if (exception != null) {
                 Log.w("homeScreen", "Listen failed.", exception)
-                // On error, just show the static item
                 itemList = listOf(staticItem)
                 return@addSnapshotListener
             }
 
             if (snapshot != null) {
                 val firestoreItems = snapshot.documents.mapNotNull { it.toObject<ListingItem>() }
-                // Combine the static item with the items from Firestore
                 itemList = listOf(staticItem) + firestoreItems
             }
         }

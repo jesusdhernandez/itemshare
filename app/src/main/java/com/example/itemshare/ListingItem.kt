@@ -6,5 +6,5 @@ data class ListingItem(
     @DocumentId val id: String = "",
     var listingName: String? = null,
     var listingSummary: String? = null,
-    var listingPic: Int? = null
+    var listingPic: Any? = null
 )
