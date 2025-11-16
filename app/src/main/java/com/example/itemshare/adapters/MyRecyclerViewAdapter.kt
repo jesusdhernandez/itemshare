@@ -9,9 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.itemshare.R
 import com.example.itemshare.ListingItem
 
-class MyRecyclerViewAdapter(private val listingList: List<ListingItem>):
+class MyRecyclerViewAdapter(private var listingList: List<ListingItem>):
         RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewHolder>()
         {
+
+            fun updateData(newList: List<ListingItem>) {
+                listingList = newList
+                notifyDataSetChanged()
+            }
+
             override fun onCreateViewHolder(
                 parent: ViewGroup,
                 viewType: Int
