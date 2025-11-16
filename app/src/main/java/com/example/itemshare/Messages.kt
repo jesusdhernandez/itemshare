@@ -38,7 +38,7 @@ fun Messages(modifier: Modifier = Modifier.fillMaxSize())
         messageInfo(
             id = "static_id",
             messagerName = "zachary smellicious",
-            message = "fackkkkkk you",
+            message = "can i borrow your iphone charger",
         )
     }
 

@@ -21,16 +21,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
-import com.google.firebase.storage.storage
 
 @Composable
 fun Requests(userEmail: String, modifier: Modifier = Modifier)
 {
     val database = Firebase.firestore
-    val storage = Firebase.storage
 
     Column(modifier) {
 
@@ -67,11 +64,11 @@ fun Requests(userEmail: String, modifier: Modifier = Modifier)
                 Text("Select Image")
             }
             if (imageUri != null) {
-                Image(
-                    painter = rememberAsyncImagePainter(imageUri),
-                    contentDescription = "Selected image",
-                    modifier = Modifier.size(100.dp)
-                )
+//                Image(
+//                    painter = rememberAsyncImagePainter(imageUri),
+//                    contentDescription = "Selected image",
+//                    modifier = Modifier.size(100.dp)
+//                )
             }
         }
         Row {
@@ -97,40 +94,40 @@ fun Requests(userEmail: String, modifier: Modifier = Modifier)
                                 Log.w("Requests", "Error adding item", e)
                             }
                     } else {
-                        // Image is present, upload it first
-                        val storageRef = storage.reference
-                        val imageRef = storageRef.child("images/${currentImageUri.lastPathSegment}")
-                        val uploadTask = imageRef.putFile(currentImageUri)
-
-                        uploadTask.continueWithTask { task ->
-                            if (!task.isSuccessful) {
-                                task.exception?.let { throw it }
-                            }
-                            imageRef.downloadUrl
-                        }.addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                val downloadUri = task.result
-                                val itemData = mapOf(
-                                    "listingName" to itemName,
-                                    "listingSummary" to itemSummary,
-                                    "owner" to userEmail,
-                                    "listingPic" to downloadUri.toString()
-                                )
-                                database.collection("itemsAvail").add(itemData)
-                                    .addOnSuccessListener {
-                                        Log.d("Requests", "Item with image added successfully")
-                                        // Clear fields
-                                        itemName = ""
-                                        itemSummary = ""
-                                        imageUri = null
-                                    }
-                                    .addOnFailureListener { e ->
-                                        Log.w("Requests", "Error adding item with image", e)
-                                    }
-                            } else {
-                                Log.w("Requests", "Image upload failed.", task.exception)
-                            }
-                        }
+//                        // Image is present, upload it first
+//                        val storageRef = storage.reference
+//                        val imageRef = storageRef.child("images/${currentImageUri.lastPathSegment}")
+//                        val uploadTask = imageRef.putFile(currentImageUri)
+//
+//                        uploadTask.continueWithTask { task ->
+//                            if (!task.isSuccessful) {
+//                                task.exception?.let { throw it }
+//                            }
+//                            imageRef.downloadUrl
+//                        }.addOnCompleteListener { task ->
+//                            if (task.isSuccessful) {
+//                                val downloadUri = task.result
+//                                val itemData = mapOf(
+//                                    "listingName" to itemName,
+//                                    "listingSummary" to itemSummary,
+//                                    "owner" to userEmail,
+//                                    "listingPic" to downloadUri.toString()
+//                                )
+//                                database.collection("itemsAvail").add(itemData)
+//                                    .addOnSuccessListener {
+//                                        Log.d("Requests", "Item with image added successfully")
+//                                        // Clear fields
+//                                        itemName = ""
+//                                        itemSummary = ""
+//                                        imageUri = null
+//                                    }
+//                                    .addOnFailureListener { e ->
+//                                        Log.w("Requests", "Error adding item with image", e)
+//                                    }
+//                            } else {
+//                                Log.w("Requests", "Image upload failed.", task.exception)
+//                            }
+//                        }
                     }
                 },
                 modifier = Modifier.padding(8.dp, 8.dp),
@@ -140,8 +137,8 @@ fun Requests(userEmail: String, modifier: Modifier = Modifier)
 
         Row(modifier) { HorizontalDivider() }
 
-        Row {
-            Text("something else")
+        Row(modifier) {
+            Text("Any items you lend will appear here.")
         }
     }
 }
