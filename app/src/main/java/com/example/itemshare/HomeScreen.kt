@@ -7,37 +7,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun HomeScreen() {
-    var text by remember { mutableStateOf("You are my sunshine!") }
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Row(
-            modifier = Modifier
-                .padding(16.dp)
+        Spacer(
+            Modifier.height(16.dp)
         )
-        {
-            Text(
-                text
-            )
-            Spacer(
-                Modifier.width(8.dp)
-            )
-            Text(
-                "bazinga"
-            )
-        }
+        Text(
+            text = "ItemShare",
+            fontSize = 20.sp,
+            modifier = Modifier.align(Alignment.CenterHorizontally)
 
-        Spacer(
-            Modifier.height(8.dp)
         )
-        Text("hello world")
         Spacer(
-            Modifier.height(8.dp)
+            Modifier.height(20.dp)
         )
         UserBox()
         emailBox()
@@ -56,9 +46,10 @@ fun UserBox(){
         label = {Text("Enter name")},
         modifier = Modifier
             .padding(16.dp)
+            .fillMaxWidth()
 
     )
-
+    //send username info to backend/database
 }
 @Composable
 fun emailBox() {
@@ -68,7 +59,8 @@ fun emailBox() {
         onValueChange = { newEmail -> email = newEmail },
         label = { Text("Enter Email") },
         modifier = Modifier
-            .padding(16.dp),
+            .padding(16.dp)
+            .fillMaxWidth(),
         colors = TextFieldDefaults.colors(
             unfocusedIndicatorColor =
                 when{
@@ -86,6 +78,7 @@ fun emailBox() {
             focusedContainerColor = Color.Transparent
         )
 
+        //send email info to backend/database
 
     )
 }
@@ -97,8 +90,9 @@ fun passBox(){
         onValueChange = {newEmail->pass = newEmail},
         label = {Text("Enter Password")},
         modifier = Modifier
+            .fillMaxWidth()
             .padding(16.dp),
     )
+    //send pass info to backend/database
 
 }
-
