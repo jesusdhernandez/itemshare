@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.itemshare.R
 import com.example.itemshare.ListingItem
 import coil.load
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 
 class MyRecyclerViewAdapter(
     private var listingList: List<ListingItem>,
@@ -59,6 +61,22 @@ class MyRecyclerViewAdapter(
                     // Clear the image and hide the view if there is no picture
                     holder.listingPic.setImageDrawable(null)
                     holder.listingPic.visibility = View.GONE
+                }
+
+                holder.borrowButton.setOnClickListener {
+                    val db = Firebase.firestore
+                    val itemRef = db.collection("itemsAvail").document(listingItem.id)
+                    itemRef.get().addOnSuccessListener { document ->
+                        if (document != null) {
+                            val item = document.toObject(ListingItem::class.java)
+                            if (item != null) {
+                                db.collection("itemsBorrowed").document(listingItem.id).set(item)
+                                    .addOnSuccessListener {
+                                        itemRef.delete()
+                                    }
+                            }
+                        }
+                    }
                 }
 
                 holder.messageButton.setOnClickListener {
