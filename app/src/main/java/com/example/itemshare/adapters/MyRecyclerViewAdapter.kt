@@ -3,12 +3,15 @@ package com.example.itemshare.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.itemshare.R
 import com.example.itemshare.ListingItem
 import coil.load
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 
 class MyRecyclerViewAdapter(private var listingList: List<ListingItem>):
         RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewHolder>()
@@ -56,6 +59,22 @@ class MyRecyclerViewAdapter(private var listingList: List<ListingItem>):
                     holder.listingPic.setImageDrawable(null)
                     holder.listingPic.visibility = View.GONE
                 }
+
+                holder.borrowButton.setOnClickListener {
+                    val db = Firebase.firestore
+                    val itemRef = db.collection("itemsAvail").document(listingItem.id)
+                    itemRef.get().addOnSuccessListener { document ->
+                        if (document != null) {
+                            val item = document.toObject(ListingItem::class.java)
+                            if (item != null) {
+                                db.collection("itemsBorrowed").document(listingItem.id).set(item)
+                                    .addOnSuccessListener { 
+                                        itemRef.delete()
+                                    }
+                            }
+                        }
+                    }
+                }
             }
 
             override fun getItemCount(): Int {
@@ -68,5 +87,6 @@ class MyRecyclerViewAdapter(private var listingList: List<ListingItem>):
                         val listingName: TextView = itemView.findViewById(R.id.listingName)
                         val listingSummary: TextView = itemView.findViewById(R.id.listingSummary)
                         val listingPic: ImageView = itemView.findViewById(R.id.listingPic)
+                        val borrowButton: Button = itemView.findViewById(R.id.borrowButton)
                     }
         }
