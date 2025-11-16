@@ -65,9 +65,10 @@ fun ItemShareApp() {
     ) {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
             when(currentDestination){
-                AppDestinations.HOME -> HomeScreen(modifier = Modifier.padding(innerPadding))
+                AppDestinations.HOME -> Text("PlaceHolder")
                 AppDestinations.REQUESTS -> Requests(modifier = Modifier.padding(innerPadding))
                 AppDestinations.SETTINGS -> Settings(modifier = Modifier.padding(innerPadding))
+                AppDestinations.LOGIN -> loginScreen(modifier = Modifier.padding(innerPadding))
             }
         }
     }
@@ -80,4 +81,6 @@ enum class AppDestinations(
     HOME("Home", Icons.Default.Home),
     REQUESTS("Requests", Icons.AutoMirrored.Default.Send),
     SETTINGS("Settings", Icons.Default.Settings),
+
+    LOGIN("Login", Icons.Default.AccountBox),
 }
